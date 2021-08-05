@@ -2,4 +2,20 @@
     <body>
     <h1>To Do List</h1>
     </body>
+
+    <form action="/add-bookmark" method="POST">
+        <input type="text" name="task">
+        <input type="text" name="deadline">
+        <input type="submit" value="Add Bookmark">
+    </form>
+
+    <ul>
+        <%todos.map((todo, index) => { %>
+        <li id="todo-<%= index %>">
+            <p>Task: <%= todo.task %></p>
+            <p>Deadline: <%= todo.deadline %> </p>
+        </li>
+        <% }) %>
+    </ul>
+
 </html>

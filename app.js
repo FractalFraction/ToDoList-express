@@ -13,58 +13,15 @@ app.use(express.urlencoded({extended: true}))
 
 app.use(methodOverride('_method'))
 
-// Get the index page 
-app.get('/', async (req, res) => {
-    console.log('Get index page!')
-    // Load all todos 
-    const todos = await ToDo.findAll({
-        attributes: ['id','task', 'deadline']
-    });
+const indexRouter = require('./routes/indexRouter.js')
+const addRouter = require('./routes/addRouter.js')
+const deleteRouter = require('./routes/deleteRouter.js')
+const editRouter = require('./routes/editRouter.js')
 
-    res.render('index', {todos: todos})
-})
-
-app.post('/add-bookmark', async (req, res) => {
-   console.log('Add a ToDo!')
-   // Run the sequelize create method
-    await ToDo.create({
-        task: req.body.task,
-        deadline: req.body.deadline
-    })
-    res.redirect('/')
-})
-
-app.delete('/todo:id', async (req, res) => {
-    console.log('Delete a ToDo!')
-     await ToDo.destroy({
-         where : {
-             id: req.params.id
-         }
-     })
-     res.redirect('/')
- })
-
- app.post('/edit-todo:id', async (req, res) => {
-     res.render('update', {
-         id: req.params.id
-     })
- })
-
-app.get('/update', async (req, res) => {
-    res.render('update')
-})
-
-app.put('/update-todo:id', async (req, res) => {
-    console.log('Update a ToDo!')
-    await ToDo.update(
-        {deadline: req.body.deadline},{
-        where : {
-            id: req.params.id
-        }
-    })
-    res.redirect('/');
-})
-
+app.use('/',indexRouter);
+app.use('/',addRouter);
+app.use('/',deleteRouter);
+app.use('/',editRouter);
 
 app.listen(port, () => {
     console.log(`Server up and running on port:${port}`)

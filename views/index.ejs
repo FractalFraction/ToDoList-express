@@ -17,7 +17,7 @@
                 <form action="/todo<%=todo.id%>?_method=DELETE" method="POST">
                     <input id="delete-todo-<%= index %>" type="submit" value="Delete">
                 </form>
-                <form action="/edit-todo<%=todo.id%>" method="POST">
+                <form action="/edit-todo<%=todo.id%>" method="GET">
                     <input id="edit-todo-<%= index %>" type="submit" value="Edit">
                 </form>   
             </span> 

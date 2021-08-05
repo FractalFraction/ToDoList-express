@@ -1,0 +1,9 @@
+<%- include ( 'partials/header.ejs' ) %>
+    <h1>Update your deadline here</h1>
+    <div>
+      <form action="/update-todo<%= id%>?_method=PUT" method="POST">
+        <input id="update-deadline" type="text" placeholder="new deadline here" name="deadline">
+        <input id="update-button" type="submit" value="Update">
+      </form> 
+    </div>
+<%- include ( 'partials/footer.ejs' ) %>

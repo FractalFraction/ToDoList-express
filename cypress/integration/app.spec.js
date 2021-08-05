@@ -13,8 +13,19 @@ describe('To Do List', () => {
     cy.task('taskTruncateTables')
     cy.task('taskCreateTables')
     cy.visit('/');
-    cy.get('#todo-0-delete').click();
+    cy.get('#delete-todo-0').click();
     cy.get('#todo-0').should('not.exist');
   });
+
+  it('can update a to do list item', () => {
+    cy.task('taskTruncateTables')
+    cy.task('taskCreateTables')
+    cy.visit('/');
+    cy.get('#edit-todo-0').click();
+    cy.get('#update-deadline').type('07/08/2021');
+    cy.get('#update-button').click();
+    cy.get('#todo-0').should('contain','07/08/2021');
+  });
+
 
 });

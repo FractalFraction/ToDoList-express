@@ -1,11 +1,14 @@
 const express = require('express')
 const app = express();
 const methodOverride = require('method-override')
+const path = require('path');
 
 const port = 3000
 const ToDo = require('./models/ToDo.js')
 
 app.set('view engine','ejs')
+//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}))
 
 app.use(methodOverride('_method'))
@@ -23,7 +26,6 @@ app.get('/', async (req, res) => {
 
 app.post('/add-bookmark', async (req, res) => {
    console.log('Add a ToDo!')
-   console.log(req.body.task);
    // Run the sequelize create method
     await ToDo.create({
         task: req.body.task,
@@ -41,6 +43,27 @@ app.delete('/todo:id', async (req, res) => {
      })
      res.redirect('/')
  })
+
+ app.post('/edit-todo:id', async (req, res) => {
+     res.render('update', {
+         id: req.params.id
+     })
+ })
+
+app.get('/update', async (req, res) => {
+    res.render('update')
+})
+
+app.put('/update-todo:id', async (req, res) => {
+    console.log('Update a ToDo!')
+    await ToDo.update(
+        {deadline: req.body.deadline},{
+        where : {
+            id: req.params.id
+        }
+    })
+    res.redirect('/');
+})
 
 
 app.listen(port, () => {

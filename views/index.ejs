@@ -1,5 +1,4 @@
-<html>
-    <body>
+<%- include ( 'partials/header.ejs' ) %>
     <h1>To Do List</h1>
     </body>
 
@@ -11,16 +10,18 @@
 
     <ul>
         <%todos.map((todo, index) => { %>
-        <li id="todo-<%= index %>">
-            <p>Task: <%= todo.task %></p>
-            <% console.log(todo) %>
-            <% console.log(todo.id) %>
-            <p>Deadline: <%= todo.deadline %> </p>
-            <form action="/todo<%=todo.id%>?_method=DELETE" method="POST">
-                <input id="delete-todo-<%= index %>" type="submit" value="Delete">
-            </form>        
-        </li>
+        <div id="todo-<%= index %>">
+            <input type="checkbox" id="todo-check-<%= index %>" name="todo-check<%=todo.id%>">
+            <label for ="todo-check<%=todo.id%>">Task: <%= todo.task %><br> Deadline: <%= todo.deadline %></label>
+           <span>
+                <form action="/todo<%=todo.id%>?_method=DELETE" method="POST">
+                    <input id="delete-todo-<%= index %>" type="submit" value="Delete">
+                </form>
+                <form action="/edit-todo<%=todo.id%>" method="POST">
+                    <input id="edit-todo-<%= index %>" type="submit" value="Edit">
+                </form>   
+            </span> 
+        </div>
         <% }) %>
     </ul>
-
-</html>
+<%- include ( 'partials/footer.ejs' ) %>

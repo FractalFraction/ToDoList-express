@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 /// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -16,7 +18,26 @@
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
+
+const truncateTables = require('../../test/truncateTables.js');
+const createTables = require('../../test/createTables.js');
+
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+  on('task', {
+    taskTruncateTables() {
+      console.log('Truncating tables');
+      truncateTables()
+      return null 
+    }, 
+
+    taskCreateTables() {
+      console.log('Creating tables');
+      createTables()
+      return null 
+    }
+
+   })
+
 }

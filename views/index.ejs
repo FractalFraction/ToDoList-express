@@ -4,16 +4,21 @@
     </body>
 
     <form action="/add-bookmark" method="POST">
-        <input type="text" name="task">
-        <input type="text" name="deadline">
-        <input type="submit" value="Add Bookmark">
+        <input id="todo-input" type="text" name="task">
+        <input id="todo-deadline-input" type="text" name="deadline">
+        <input id="add-todo" type="submit" value="Add ToDo">
     </form>
 
     <ul>
         <%todos.map((todo, index) => { %>
         <li id="todo-<%= index %>">
             <p>Task: <%= todo.task %></p>
+            <% console.log(todo) %>
+            <% console.log(todo.id) %>
             <p>Deadline: <%= todo.deadline %> </p>
+            <form action="/todo<%=todo.id%>?_method=DELETE" method="POST">
+                <input id="delete-todo-<%= index %>" type="submit" value="Delete">
+            </form>        
         </li>
         <% }) %>
     </ul>
